@@ -29,6 +29,7 @@ a {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 10; /* 앞으로 나오게 */
   width: 100%;
   height: 44px;
   padding: 0 1rem;
@@ -38,6 +39,7 @@ a {
   position: absolute;
   top: 45px;
   left: 0;
+  z-index: 11; /* 앞으로 나오게 */
   width: 100%;
   height: 52px;
   padding: 0 1rem;
@@ -71,10 +73,12 @@ a {
 
 .scroll-section {
   padding-top: 50vh;
-  border: 3px solid black;
 }
 
 #scroll-section-0 h1 {
+  position: relative;
+  top: -10vh;
+  z-index: 5;
   font-size: 4rem;
   text-align: center;
 }
@@ -85,8 +89,8 @@ a {
   justify-content: center;
   align-items: center;
   top: 35vh;
-  height: 3em;
   margin: 5px 0;
+  height: 3em;
   font-size: 2.5rem;
   opacity: 0;
   /* background: rgba(0,0,0,0.3); */
@@ -144,9 +148,10 @@ a {
   font-size: 3.5rem;
 }
 
-.desc-message {
+.sticky-elem.desc-message {
   width: 50%;
   font-weight: 900;
+  opacity: 0;
 }
 
 .pin {
@@ -161,7 +166,6 @@ a {
   /* top: 0; */
   left: 0;
   width: 100%;
-
 }
 
 #show-scene-0 #scroll-section-0 .sticky-elem,
@@ -170,6 +174,19 @@ a {
 #show-scene-3 #scroll-section-3 .sticky-elem{
   display: block;
 }
+
+.sticky-elem-canvas {
+  top: 0;
+  height: 100%;
+}
+
+.sticky-elem-canvas canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+
 
 /* scroll-scetion-3 */
 .mid-message {

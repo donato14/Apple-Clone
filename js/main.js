@@ -5,6 +5,7 @@
   let yOffset = 0; // window.pageYOffset 대신 쓸 변수
   let prevScrollHeight = 0; // 현재 스크롤 위치(yOffset)보다 이전에 위치한 스크롤 섹션들의 스크롤 높이값의 합
   let currentScene = 0; //현재 활성화된(눈앞에 보고있는) 씬(scroll-section)
+  let enterNewScene = false; // 새로운 scene이 시작된 순간 true
   
   const sceneInfo = [
     {
@@ -73,20 +74,29 @@
   }
 
   function calcValues(values, currentYOffset) {
+    let rv;
+    //현재 씬(스크롤 섹션)에서 스크롤된 범위를 비율로 구하기
+    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
 
+    rv= scrollRatio * (values[1] - values[0]) + values[0];
+
+    return rv;
   }
 
   function playAnimation() {
 
     const objects = sceneInfo[currentScene].objects;
     const values = sceneInfo[currentScene].values;
+    const currentYOffset = yOffset - prevScrollHeight;
+
+    console.log(currentScene);
 
     switch (currentScene) {
       case 0:
         // console.log('0 play');
-        let messageA_opacity_0 = sceneInfo[0].values.messageA_opacity[0];
-        let messageA_opacity_1 = sceneInfo[0].values.messageA_opacity[1];
-        console.log(messageA_opacity_0, messageA_opacity_1);
+        let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
+        objects.msessageA.style.opacity = messageA_opacity_in;
+        console.log(messageA_opacity_in);
         //css
         break;
       case 1:
@@ -102,21 +112,25 @@
   }
 
   function scrollLoop() {
+    enterNewScene = false;
     prevScrollHeight = 0;
     for (let i = 0; i < currentScene; i++){
       prevScrollHeight += sceneInfo[i].scrollHeight;
     }
 
     if(yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+      enterNewScene = true;
       currentScene++;
       document.body.setAttribute('id',`show-scene-${currentScene}`);
     }
     if (yOffset < prevScrollHeight) {
+      enterNewScene = true; //스크롤 시 마이너스를 막아줌
       if (currentScene === 0) return; //브라우저 바운스 효과로 인해 마이너스가 되는 것을 방지(모바일)
       currentScene--;
       document.body.setAttribute('id',`show-scene-${currentScene}`);
     }
 
+    if (enterNewScene) return;
 
     playAnimation();
   }

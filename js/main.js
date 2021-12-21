@@ -21,7 +21,13 @@
         msessageD: document.querySelector('#scroll-section-0 .main-message.d')
       },
       values: {
-        messageA_opacity: [0, 1]
+        // A
+        messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2}],
+        messageA_opacity_out: [1, 0, { start: 0.25, end: 0.3}],
+        messageA_translateY_in: [20, 0, { start: 0.1, end: 0.2}],
+        messageA_translateY_out: [0, -20, { start: 0.25, end: 0.3}]
+        // B
+        // messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4}],
       }
     },
     {
@@ -56,7 +62,11 @@
   function setLayout() {
     //각 스크롤 섹션의 높이 세팅
     for (let i = 0; i < sceneInfo.length; i++) {
-      sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      if (sceneInfo[i].type === 'sticky') {
+        sceneInfo[i].scrollHeight = sceneInfo[i].heightNum * window.innerHeight;
+      } else if (sceneInfo[i].type === 'normal') {
+        sceneInfo[i].scrollHeight = sceneInfo[i].objects.container.offsetHeight;
+      }
       sceneInfo[i].objects.container.style.height = `${sceneInfo[i].scrollHeight}px`
     }
 
@@ -76,9 +86,25 @@
   function calcValues(values, currentYOffset) {
     let rv;
     //현재 씬(스크롤 섹션)에서 스크롤된 범위를 비율로 구하기
-    let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight;
+    const scrollHeight = sceneInfo[currentScene].scrollHeight
+    const scrollRatio = currentYOffset / scrollHeight;
 
-    rv= scrollRatio * (values[1] - values[0]) + values[0];
+    if (values.length === 3) {
+      // start ~ end 사이에 애니메이션 실행
+      const partScrollStart = values[2].start * scrollHeight;
+      const partScrollEnd = values[2].end * scrollHeight;
+      const partScrollHeight = partScrollEnd - partScrollStart;
+
+      if (currentYOffset >= partScrollStart && currentYOffset <= partScrollEnd) {
+        rv=  (currentYOffset - partScrollStart) / partScrollHeight * (values[1] - values[0]) + values[0];
+      } else if (currentYOffset < partScrollStart) {
+        rv= values[0];
+      } else if (currentYOffset > partScrollEnd) {
+        rv = values[1];
+      }
+    } else {
+      rv= scrollRatio * (values[1] - values[0]) + values[0];
+    }
 
     return rv;
   }
@@ -87,15 +113,28 @@
 
     const objects = sceneInfo[currentScene].objects;
     const values = sceneInfo[currentScene].values;
-    const currentYOffset = yOffset - prevScrollHeight;
+    const currentYOffset = yOffset - prevScrollHeight; //현재 씬에서 스크롤된 높이
+    const scrollHeight = sceneInfo[currentScene].scrollHeight;
+    const scrollRatio = currentYOffset / scrollHeight;
 
-    console.log(currentScene);
 
     switch (currentScene) {
       case 0:
-        // console.log('0 play');
-        let messageA_opacity_in = calcValues(values.messageA_opacity, currentYOffset);
-        objects.msessageA.style.opacity = messageA_opacity_in;
+        // const messageA_opacity_in = calcValues(values.messageA_opacity_in, currentYOffset);
+        // const messageA_opacity_out = calcValues(values.messageA_opacity_out, currentYOffset);
+        // const messageA_translateY_in = calcValues(values.messageA_translateY_in, currentYOffset);
+        // const messageA_translateY_out = calcValues(values.messageA_translateY_out, currentYOffset);
+        
+        if (scrollRatio <= 0.22) {
+          //in
+          objects.msessageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset);
+          objects.msessageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in, currentYOffset)}%)`;
+        } else {
+          //out
+          objects.msessageA.style.opacity = calcValues(values.messageA_opacity_out, currentYOffset);
+          objects.msessageA.style.transform = `translateY(${values.messageA_translateY_out, currentYOffset}%)`;
+        }
+
         console.log(messageA_opacity_in);
         //css
         break;

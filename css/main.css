@@ -26,11 +26,21 @@ a {
 /* header */
 
 .global-nav {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 44px;
+  padding: 0 1rem;
 }
 
 .local-nav {
+  position: absolute;
+  top: 45px;
+  left: 0;
+  width: 100%;
   height: 52px;
+  padding: 0 1rem;
   border-bottom: 1px solid #ddd ;
 }
 
@@ -55,4 +65,156 @@ a {
 .local-nav-links a:not(.product-name) {
   margin-left: 2em;
   font-size: 0.8rem;
+}
+
+/* scroll-section-0 */
+
+.scroll-section {
+  padding-top: 50vh;
+  border: 3px solid black;
+}
+
+#scroll-section-0 h1 {
+  font-size: 4rem;
+  text-align: center;
+}
+
+
+.main-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3em;
+  margin: 5px 0;
+  font-size: 2.5rem;
+  /* background: rgba(0,0,0,0.3); */
+}
+
+.main-message p {
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.2;
+}
+
+
+
+/* scroll-section-1 */
+.description{
+  max-width: 1000px;
+    margin: 0 auto;
+  font-size: 1.2rem;
+  color: #888;
+  padding: 0 1rem;
+}
+
+.description::after {
+  display: block;
+  content: '';
+  clear: left;
+}
+
+.description strong {
+  float: left;
+  margin-right: 0.2em;
+  font-size: 3rem;
+  color: rgb(29, 29, 31);
+}
+
+/* scroll-section-2 */
+
+.main-message small {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 1rem;
+}
+
+#scroll-section-2 .main-message {
+  font-size: 3.5rem;
+}
+
+.desc-message {
+  width: 50%;
+  font-weight: 900;
+}
+
+.pin {
+  width: 1px;
+  height: 100px;
+  background: rgb(29, 29, 31);
+}
+
+.sticky-elem {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+}
+
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem{
+  display: block;
+}
+
+/* scroll-scetion-3 */
+.mid-message {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 2rem;
+  color: #888;
+}
+
+.mid-message strong {
+  color: rgb(29, 29, 31);;
+}
+
+.canvas-caption {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* footer */
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 7rem;
+  background-color: #fff000;
+}
+
+@media screen and (min-width:1024px) {
+  #scroll-section-0 h1 {
+    font-size: 9vw;
+  }
+  .main-message {
+    font-size: 4vw;
+  }
+  .description {
+    font-size: 2rem;
+  }
+  #strong-bold {
+    font-size: 6rem;
+  }
+  #scroll-section-2 .main-message {
+    font-size: 6vw;
+  }
+  #scroll-section-2 small {
+    font-size: 1.5vw;
+  }
+  .desc-message {
+    width: 20%;
+  }
+  .mid-message {
+    font-size: 4vw;
+  }
+  .canvas-caption{
+    font-size: 2rem;
+  }
 }

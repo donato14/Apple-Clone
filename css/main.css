@@ -46,6 +46,13 @@ a {
   border-bottom: 1px solid #ddd ;
 }
 
+.local-nav-sticky .local-nav {
+  position: fixed;
+  top: 0;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: saturate(180%) blur(15px);
+}
+
 .global-nav-links,
 .local-nav-links {
   display: flex;
@@ -72,6 +79,7 @@ a {
 /* scroll-section-0 */
 
 .scroll-section {
+  position: relative;
   padding-top: 50vh;
 }
 
@@ -186,7 +194,10 @@ a {
   left: 50%;
 }
 
-
+.image-blend-canvas.sticky {
+  position: fixed;
+  top: 0;
+}
 
 /* scroll-scetion-3 */
 .mid-message {
@@ -203,10 +214,19 @@ a {
 
 .canvas-caption {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: -8em auto 0;
   padding: 0 1rem;
   font-size: 1.2rem;
   color: #888;
+}
+
+.image-blend-canvas {
+  background: cornflowerblue;
+}
+
+#scroll-section-3 {
+  display: flex;
+  flex-direction: column;
 }
 
 /* footer */
@@ -218,6 +238,7 @@ a {
   background-color: #fff000;
 }
 
+
 @media screen and (min-width:1024px) {
   #scroll-section-0 h1 {
     font-size: 9vw;
@@ -226,6 +247,7 @@ a {
     font-size: 4vw;
   }
   .description {
+    padding: 0;
     font-size: 2rem;
   }
   #strong-bold {
@@ -248,9 +270,12 @@ a {
     left: 55%;
   }
   .mid-message {
+    width: 1000px;
+    padding: 0;
     font-size: 4vw;
   }
   .canvas-caption{
+    padding: 0;
     font-size: 2rem;
   }
 }
